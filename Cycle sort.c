@@ -1,48 +1,65 @@
-#include <stdio.h>
-#include <stdio.h>
+/******************************************************************************
 
-void cyclesort(int a[],int n)
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+ 
+#define MAX 10
+ 
+void cycle_sort(int *);
+ 
+void main()
 {
-    int i=0;
-    while(i<n)
+    int a[MAX],i;
+ 
+    printf("enter the elements into array :");
+    for (i = 0;i < MAX; i++)
     {
-        int correct=a[i]-1;
-        if(a[i]!=a[correct])
-        {
-            int temp=a[i];
-            a[i]=a[correct];
-            a[correct]=temp;
-        }
-        else
-        {
-            i++;
-        }
+        scanf("%d", &a[i]);
+    }
+    cycle_sort(a);
+    printf("sorted elements are :\n");
+    for (i = 0;i < MAX; i++)
+    {
+        printf("%d ", a[i]);
     }
 }
-    
-    
-void print(int a[],int n)
+
+ 
+/* sorts elements using cycle sort algorithm */
+void cycle_sort(int * a)
 {
-    for(int i=0;i<n;i++)
+    int temp, item, pos, i, j, k;
+ 
+    for (i = 0;i < MAX; i++)
     {
-        printf("%d ",a[i]);
+        item = a[i];
+        pos = i;
+        do
+        {
+            k = 0;
+            for (j = 0;j < MAX;j++)
+            {
+                if (pos != j && a[j] < item)
+                {
+                    k++;
+                }
+            }
+            if (pos != k)
+             {
+                while (pos != k && item == a[k])
+                {
+                    k++;
+                }
+                temp = a[k];
+                a[k] = item;
+                item = temp;
+                pos = k;
+            }
+        }while (pos != i);
     }
-    printf("\n");
-}
-int main()
-{
-    int a[100],n;
-    printf("Enter the number of elements\n");
-    scanf("%d",&n);
-    printf("Enter the elements\n");
-    for(int i=0;i<n;i++)
-    {
-        scanf("%d",&a[i]);
-    }
-    printf("Before sorting\n");
-    print(a,n);
-    cyclesort(a,n);
-    printf("After sorting\n");
-    print(a,n);
-    return 0;
 }
